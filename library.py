@@ -159,8 +159,9 @@ class RateEquationSolver:
         b32v23 = transition23.B21() * V23 * row23
         
         # Need to check later!
-        sigma_ion = 1e-17
+        sigma_ion = 6e-21
         W_ion = sigma_ion * laser3.intensity / (h * laser3.frequency)
+        print(W_ion)
         
         M = np.array([
                      [-b12v12,                   b21v12 + A21,              A31,    0],
