@@ -169,7 +169,6 @@ class RateEquationSolver:
                      [      0,                   b23v23,   -(b32v23 + A32 + A31 + W_ion),  0],
                      [      0,                        0,                  W_ion,    0]
         ])
-        print(M)
         return M
 
     '''
@@ -203,6 +202,10 @@ class RateEquationSolver:
         return M
     '''
     
+    def population_at_t(self, N0, t):
+        M = self.build_3_step_matrix()
+        return np.ndarray.tolist(expm(M * t) @ N0)
+        
     def solve(self, N0, t):
         M = self.build_3_step_matrix()
         return np.array([expm(M * ti) @ N0 for ti in t])
