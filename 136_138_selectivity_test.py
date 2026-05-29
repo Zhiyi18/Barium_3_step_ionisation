@@ -189,7 +189,7 @@ for i in range(-100, 100, 1):
     
     # Testing the solver
     barium_solver = library.RateEquationSolver(states, transitions, lasers,
-                                               temperature = 500, mass = 138 * m_p)
+                                               temperature = 500, mass = 136 * m_p)
     
     N0 = [1, 0, 0, 0]   # Initially all in ground state
     population = barium_solver.population_at_t(N0, 1e-9)
