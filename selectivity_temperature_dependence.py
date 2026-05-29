@@ -29,7 +29,7 @@ Created on Thu May 21 11:49:00 2026
 import numpy as np
 import library
 import matplotlib.pyplot as plt
-from scipy.constants import m_p, c
+from scipy.constants import m_p, c, k
 
 # This code snippet is for estimating isotope selectivity at different temperatures
 # A pulsed laser of duration 1ns and intensity 1e11 is used
@@ -174,27 +174,62 @@ for i in range (0, 200, 1):
     population_140 = barium_solver_140.population_at_t(N0_140, 1e-9)
     
     Ba_140_fraction.append(population_140[3] / population_138[3])
-    
 
+#%%
+
+# Plotting isoptope selectivity against log temperature
 fig, ax = plt.subplots(figsize=(8, 5))
-
 log_temperature_vals = np.log10(temperature_vals)
-ax.plot(temperature_vals, Ba_136_fraction,
+
+ax.plot(log_temperature_vals, Ba_136_fraction,
         label='Ba136')
-ax.plot(temperature_vals, Ba_134_fraction,
+ax.plot(log_temperature_vals, Ba_134_fraction,
         label='Ba134')
-ax.plot(temperature_vals, Ba_140_fraction,
+ax.plot(log_temperature_vals, Ba_140_fraction,
         label='Ba140')
-
-
-ax.set_xlabel('Temperature(log10 K)', fontsize=12)
+ax.set_xlabel('Temperature(log K)', fontsize=12)
 ax.set_ylabel('Isotope/Ba138 fraction', fontsize=12)
 
 ax.set_title('Temperature dependence of isotope selectivity', fontsize=13)
 ax.grid(alpha=0.3)
 ax.legend()
-
 plt.show()
+
+'''
+#%%
+# Plotting isotope selectivity against isotope shift/doppler width
+fig, ax = plt.subplots(figsize=(8, 5))
+
+Doppler_width_vals_136 = Doppler_width_vals_136 = (transition_12_136.frequency()
+    * np.sqrt(8 * k * np.array(temperature_vals) * np.log(2) / (136 * m_p * c**2)))
+Doppler_width_vals_134 = Doppler_width_vals_134 = (transition_12_134.frequency()
+    * np.sqrt(8 * k * np.array(temperature_vals) * np.log(2) / (134 * m_p * c**2)))
+Doppler_width_vals_140 = Doppler_width_vals_140 = (transition_12_140.frequency()
+    * np.sqrt(8 * k * np.array(temperature_vals) * np.log(2) / (140 * m_p * c**2)))
+
+isotope_shift_fraction_136 = 128.9 * 1e6 / Doppler_width_vals_136
+isotope_shift_fraction_134 = 143.0 * 1e6 / Doppler_width_vals_134
+isotope_shift_fraction_140 = 1075 * 1e6 / Doppler_width_vals_140
+
+ax.plot(isotope_shift_fraction_136, Ba_136_fraction,
+        label='Ba136')
+ax.plot(isotope_shift_fraction_134, Ba_136_fraction,
+        label='Ba134')
+ax.plot(isotope_shift_fraction_140, Ba_136_fraction,
+        label='Ba140')
+
+ax.set_xlabel(r'$\Delta_{\mathrm{iso}} / \Delta \nu_D$', fontsize=12)
+ax.set_ylabel('Isotope/Ba138 fraction', fontsize=12)
+
+ax.set_title('Temperature dependence of isotope selectivity', fontsize=13)
+ax.grid(alpha=0.3)
+ax.legend()
+plt.show()
+'''
+
+
+
+
 
 
     
