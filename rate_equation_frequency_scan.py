@@ -25,7 +25,7 @@ population_vals = []
 laser_frequency_vals = []
 
 
-for i in range(-20, 20, 1):
+for i in range(-200, 200, 1):
     print(i)
     # Adding the states
     state_1 = library.State(
@@ -72,12 +72,12 @@ for i in range(-20, 20, 1):
     
     # Scanning the first laser, step = 10MHz
     laser_1 = library.Laser(
-        frequency = transition_12.frequency() + i * 10e7,
+        frequency = transition_12.frequency() + i * 1e7,
         intensity = 1e5,
         linewidth = 4e6,
     )
     
-    laser_frequency_vals.append(c / laser_1.frequency)
+    laser_frequency_vals.append(laser_1.frequency)
     
     laser_2 = library.Laser(
         frequency = transition_23.frequency(),
@@ -96,7 +96,6 @@ for i in range(-20, 20, 1):
     # Testing the solver
     barium_solver = library.RateEquationSolver(states, transitions, lasers,
                                                temperature = 500, mass = 138 * m_p)
-    t_vals = np.linspace(0, 1e-9, num = 1000, endpoint=True)
     
     N0 = [1, 0, 0, 0]   # Initially all in ground state
     population = barium_solver.population_at_t(N0, 1e-9)
@@ -106,6 +105,40 @@ print(population_vals)
 
 fig, ax = plt.subplots(figsize=(8, 5))
 
+lambda0 = transition_12.frequency()
+
+# Convert wavelength scan to frequency detuning
+detuning_MHz = (np.array(laser_frequency_vals) - lambda0) / 1e6
+
+population_vals = np.array(population_vals)
+
+fig, ax = plt.subplots(figsize=(8,5))
+
+ax.plot(detuning_MHz, population_vals[:,0],
+        label='$N_1$ ground (6s²)')
+
+ax.plot(detuning_MHz, population_vals[:,1],
+        label='$N_2$ (6s6p ¹P₁)')
+
+ax.plot(detuning_MHz, population_vals[:,2],
+        label='$N_3$ (6s6d ¹D₂)')
+
+ax.plot(detuning_MHz, population_vals[:,3],
+        label='$N_4$ ion')
+
+ax.set_xlabel('553 nm laser detuning (MHz)', fontsize=12)
+
+ax.set_ylabel('Population at 1 ns', fontsize=12)
+
+ax.set_title('Scanning 553 nm laser (Ba-138)', fontsize=13)
+
+ax.grid(alpha=0.3)
+
+ax.legend()
+
+plt.show()
+
+'''
 population_vals = np.array(population_vals)
 ax.plot(laser_frequency_vals, population_vals[:,0], label = '$N_1$ ground (6s²)')
 ax.plot(laser_frequency_vals, population_vals[:,1], label = '$N_2$ (6s6p ¹P₁)')
@@ -113,7 +146,8 @@ ax.plot(laser_frequency_vals, population_vals[:,2], label = '$N_3$ (6s6d ¹D₂)
 ax.plot(laser_frequency_vals, population_vals[:,3], label = '$N_4$ ion')
 ax.set_xlabel('553nm laser wavelength', fontsize=12)
 ax.set_ylabel('Ion fraction at 1ns', fontsize=12)
-ax.set_title('Scanning the 553nm laser_test', fontsize=13)
+ax.set_title('Scanning the 553nm laser_test_Ba138', fontsize=13)
 plt.legend()
 plt.show()
+'''
     
