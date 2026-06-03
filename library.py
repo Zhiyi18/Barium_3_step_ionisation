@@ -91,7 +91,7 @@ class Transition:
         return self.frequency() - laser.frequency
     
     '''
-    # This part is replaced by voigt_profile
+    # This part is replaced by calculating the Voigt profile directly
     def lorentzian(self, laser):
         return 1 / (1 + (2 * self.detuning(laser) / self.linewidth)**2)
     
@@ -105,7 +105,6 @@ class Transition:
     
     def line_profile(self, laser, temperature, mass):
          delta = self.detuning(laser)
-         print(delta)
          sigma = self.doppler_sigma(temperature, mass)
          gamma = self.linewidth / (2 * np.pi)
          
@@ -113,7 +112,6 @@ class Transition:
          V0 = voigt_profile(0.0, sigma, gamma)
 
          return V / V0
-        
     
 class RateEquationSolver:
     def __init__(self, states, transitions, lasers, temperature, mass):
