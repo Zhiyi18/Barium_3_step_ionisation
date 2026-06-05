@@ -41,13 +41,13 @@ states = [state_1, state_2, state_3]
 
 # Add the transitions
 transition_12 = library.Transition(state_1, state_2,
-                                  linewidth = 20e6, dipole=None, A = 1.19e8)
+                                  linewidth = 20e6, lifetime=None, A = 1.19e8)
 
 transition_23 = library.Transition(state_2, state_3,
-                                  linewidth = 20e6, dipole=None, A = 5.00e6)
+                                  linewidth = 20e6, lifetime=None, A = 5.00e6)
 
 transition_13 = library.Transition(state_1, state_3,
-                                  linewidth = 20e6, dipole=None, A = 1e5)
+                                  linewidth = 20e6, lifetime=None, A = 1e5)
 
 transitions = [transition_12, transition_23, transition_13]
 

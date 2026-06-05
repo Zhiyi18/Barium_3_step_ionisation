@@ -62,11 +62,11 @@ class Laser:
              
 
 class Transition:
-    def __init__(self, lower, upper, linewidth=None, dipole=None, A=None):
+    def __init__(self, lower, upper, linewidth=None, lifetime=None, A=None):
         self.lower = lower
         self.upper = upper
         self.linewidth = linewidth
-        self.dipole = dipole
+        self.lifetime = lifetime
         self.A = A
         
     def frequency(self):
@@ -89,6 +89,15 @@ class Transition:
     
     def detuning(self, laser):
         return self.frequency() - laser.frequency
+    
+    def transitionDipoleMoment(self):
+        d_ij = np.sqrt(
+            3 * np.pi * epsilon_0 * hbar * c**3 * self.A
+            / self.frequency()**3
+            )
+        return d_ij
+    
+        
     
     '''
     # This part is replaced by calculating the Voigt profile directly
@@ -207,6 +216,30 @@ class RateEquationSolver:
     def solve(self, N0, t):
         M = self.build_3_step_matrix()
         return np.array([expm(M * ti) @ N0 for ti in t])
+    
+
+"""
+# Gonna use QuTip for this!
+class densityMatrixSolver:
+    def __init__(self, states, transitions, lasers, mass):
+        self.states = states
+        self.transitions = transitions
+        self.lasers = lasers
+        self.mass = mass
+        
+    def buildHamiltonian(self):
+        
+    
+    
+    def buildDissipation(self, densityMatrix):
+        
+        
+        
+    def solve(self, densityMatrix, t):
+        
+"""
+    
+    
             
             
         

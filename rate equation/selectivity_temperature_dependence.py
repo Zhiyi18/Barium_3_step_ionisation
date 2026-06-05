@@ -62,11 +62,11 @@ for i in range (0, 200, 1):
     
     # Add the transitions
     transition_12_138 = library.Transition(state_1_138, state_2_138,
-                                      linewidth = 20e6, dipole=None, A = 1.19e8)
+                                      linewidth = 20e6, lifetime=None, A = 1.19e8)
     transition_23_138 = library.Transition(state_2_138, state_3_138,
-                                      linewidth = 20e6, dipole=None, A = 5.00e6)
+                                      linewidth = 20e6, lifetime=None, A = 5.00e6)
     transition_13_138 = library.Transition(state_1_138, state_3_138,
-                                      linewidth = 20e6, dipole=None, A = 1e5)
+                                      linewidth = 20e6, lifetime=None, A = 1e5)
     transitions_138 = [transition_12_138, transition_23_138, transition_13_138]
     
     # Add the lasers
