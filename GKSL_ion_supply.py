@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun  4 16:45:27 2026
+Created on Sat Jun  6 15:42:22 2026
 
 @author: USER-01
 """
@@ -87,11 +87,13 @@ Delta2 = (laser_2.frequency - transition_23.frequency()) * 2 * np.pi
 
 sigma_ion = 6e-21
 Gamma_ion = sigma_ion * laser_3.intensity / (h * laser_3.frequency)
+Gamma_supply =  Gamma_ion
 
-g = basis(4,0)
-e = basis(4,1)
-r = basis(4,2)
-c = basis(4,3)
+n = basis(5, 0)
+g = basis(5, 1)
+e = basis(5, 2)
+r = basis(5, 3)
+c = basis(5, 4)
 
 # Hamiltonian in rotating frame
 H = (
@@ -103,13 +105,14 @@ H = (
 
 # The linewidth of the final transition is a guess!
 c_ops = [
-    np.sqrt(transition_12.A) * g*e.dag(),
-    np.sqrt(transition_23.A) * e*r.dag(),
-    np.sqrt(Gamma_ion) * c*r.dag()
+    np.sqrt(Gamma_supply) * n * g.dag(),
+    np.sqrt(transition_12.A) * g * e.dag(),
+    np.sqrt(transition_23.A) * e * r.dag(),
+    np.sqrt(Gamma_ion) * c * r.dag()
 ]
 
 rho0 = g * g.dag()
-tlist = np.linspace(0, 1e-9, num=1000)
+tlist = np.linspace(0, 0.6e-8, num=1000)
 
 result = mesolve(
     H,
@@ -117,6 +120,7 @@ result = mesolve(
     tlist,
     c_ops = c_ops,
     e_ops = [
+        n*n.dag(),
         g*g.dag(),
         e*e.dag(),
         r*r.dag(),
@@ -126,13 +130,13 @@ result = mesolve(
 
 fig, ax = plt.subplots()
 
-ax.plot(tlist, result.expect[0], lw = 0.5);
-
 ax.plot(tlist, result.expect[1], lw = 0.5);
 
 ax.plot(tlist, result.expect[2], lw = 0.5);
 
-ax.plot(tlist, result.expect[3], lw = 1);
+ax.plot(tlist, result.expect[3], lw = 0.5);
+
+ax.plot(tlist, result.expect[4], lw = 1);
 
 ax.set_xlabel('Time');
 
@@ -147,6 +151,5 @@ ax.legend([r'$\rho_{11}$ (6s²)',
 
 plt.show(fig)
 
-rho_ss = steadystate(H, c_ops)
-
-print(rho_ss)
+# rho_ss = steadystate(H, c_ops)
+# print(rho_ss)
