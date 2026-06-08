@@ -133,7 +133,32 @@ class RateEquationSolver:
         # s is used as the key in the dictionary, and i is the matrix index
         self.index = {id(s): i for i, s in enumerate(states)}
         
+    
+    def build_2_step_matrix(self):
+        transition12 = self.transitions[0]
+        transition23 = self.transitions[1]
+    
+        laser1 = self.lasers[0]
+        laser2 = self.lasers[1]
         
+        V12 = transition12.line_profile(laser1, self.temperature, self.mass)
+        
+        A21 = transition12.A
+        
+        row12 = laser1.intensity / (c * laser1.linewidth)
+        b12v12 = transition12.B12() * V12 * row12
+        b21v12 = transition12.B21() * V12 * row12
+        
+        sigma_ion = 6e-21
+        W_ion = sigma_ion * laser2.intensity / (h * laser2.frequency)
+        
+        M_2_step = ([b12v12, b21v12 + A21, 0],
+                    [-A21 - b12v12, -b12v12 - W_ion, 0 ],
+                    [0, W_ion, 0])
+        
+        
+        return M_2_step
+    
     def build_3_step_matrix(self):
         transition12 = self.transitions[0]
         transition23 = self.transitions[1]
@@ -217,6 +242,13 @@ class RateEquationSolver:
         M = self.build_3_step_matrix()
         return np.array([expm(M * ti) @ N0 for ti in t])
     
+    def population_at_t_2step(self, N0, t):
+        M = self.build_2_step_matrix()
+        return np.ndarray.tolist(expm(M * t) @ N0)
+    
+    def solve_2step(self, N0, t):
+        M = self.build_2_step_matrix()
+        return np.array([expm(M * ti) @ N0 for ti in t])
 
 """
 # Gonna use QuTip for this!

@@ -70,7 +70,7 @@ laser_2 = library.Laser(
 
 laser_3 = library.Laser(
     frequency = c / 405e-9,
-    intensity = 1e11,
+    intensity = 1e10,
     linewidth = 4e6,
 )
 
@@ -101,7 +101,7 @@ H = (
     - (Delta1+Delta2) * r*r.dag()
 )
 
-# The linewidth of the final transition is a guess!
+# The jump operators
 c_ops = [
     np.sqrt(transition_12.A) * g*e.dag(),
     np.sqrt(transition_23.A) * e*r.dag(),
@@ -109,7 +109,7 @@ c_ops = [
 ]
 
 rho0 = g * g.dag()
-tlist = np.linspace(0, 1e-9, num=1000)
+tlist = np.linspace(0, 1e-7, num=1000)
 
 result = mesolve(
     H,
