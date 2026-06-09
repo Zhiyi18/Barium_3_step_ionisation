@@ -30,7 +30,10 @@ def query_nist_lines(element, low_nm, high_nm):
         'tab_delimited': 'on',
     }
     
-    response = requests.get(url, params=params)
+    print("Sending request...")
+    response = requests.get(url, params=params, timeout=30)
+    print("Got response")
+
     # Parse tab-delimited response into DataFrame
     df = pd.read_csv(StringIO(response.text), sep='\t', 
                      comment='#', skip_blank_lines=True)
