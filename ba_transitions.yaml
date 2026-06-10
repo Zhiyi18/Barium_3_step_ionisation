@@ -1,0 +1,132 @@
+- lower: 6s.6p 1P_1.0
+  upper: 5d.6d 1D_2.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.6912279
+  wavelength_nm: 505.6367
+  Aki: null
+- lower: 6s.6p 1P_1.0
+  upper: 6s.8d 1D_2.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.6413703
+  wavelength_nm: 516.1313
+  Aki: null
+- lower: 6s.6p 1P_1.0
+  upper: 5d.6d 3F_2.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.5984244
+  wavelength_nm: 525.5266
+  Aki: null
+- lower: 6s.6p 1P_1.0
+  upper: 6s.9s 3S_1.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.575348
+  wavelength_nm: 530.7177
+  Aki: null
+- lower: 6s.6p 3P_0.0
+  upper: 6s.6d 3D_1.0
+  lower_energy_cm-1: 1.5207932
+  upper_energy_cm-1: 3.8057715
+  wavelength_nm: 542.6056
+  Aki: null
+- lower: 6s.6p 1P_1.0
+  upper: 5d.6d 1P_1.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.5187988
+  wavelength_nm: 543.8829
+  Aki: null
+- lower: 6s.6p 3P_1.0
+  upper: 6s.6d 3D_2.0
+  lower_energy_cm-1: 1.5667416
+  upper_energy_cm-1: 3.8125974
+  wavelength_nm: 552.0577
+  Aki: 57000000.0
+- lower: 6s2 1S_0.0
+  upper: 6s.6p 1P_1.0
+  lower_energy_cm-1: 0.0
+  upper_energy_cm-1: 2.239187
+  wavelength_nm: 553.7018
+  Aki: 119000000.0
+- lower: 6s.6p 3P_1.0
+  upper: 6s.6d 3D_1.0
+  lower_energy_cm-1: 1.5667416
+  upper_energy_cm-1: 3.8057715
+  wavelength_nm: 553.7407
+  Aki: null
+- lower: 6s.6p 1P_1.0
+  upper: 5d.6d 3D_1.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.4552241
+  wavelength_nm: 559.4861
+  Aki: null
+- lower: 6s.5d 3D_2.0
+  upper: 5d.6p 1F_3.0
+  lower_energy_cm-1: 1.1425765
+  upper_energy_cm-1: 3.3247932
+  wavelength_nm: 568.1571
+  Aki: null
+- lower: 6s.6p 3P_1.0
+  upper: 6s.6d 1D_2.0
+  lower_energy_cm-1: 1.5667416
+  upper_energy_cm-1: 3.7488886
+  wavelength_nm: 568.1752
+  Aki: null
+- lower: 6s.6p 3P_2.0
+  upper: 6s.6d 3D_3.0
+  lower_energy_cm-1: 1.6756148
+  upper_energy_cm-1: 3.8209593
+  wavelength_nm: 577.922
+  Aki: 80000000.0
+- lower: 6s.6p 1P_1.0
+  upper: 6p2 3P_2.0
+  lower_energy_cm-1: 2.239187
+  upper_energy_cm-1: 4.3821487
+  wavelength_nm: 578.5646
+  Aki: 21000000.0
+- lower: 6s.6p 3P_2.0
+  upper: 6s.6d 3D_2.0
+  lower_energy_cm-1: 1.6756148
+  upper_energy_cm-1: 3.8125974
+  wavelength_nm: 580.1834
+  Aki: 24000000.0
+- lower: 6s.5d 3D_3.0
+  upper: 5d.6p 1F_3.0
+  lower_energy_cm-1: 1.1898185
+  upper_energy_cm-1: 3.3247932
+  wavelength_nm: 580.7291
+  Aki: 1100000.0
+- lower: 6s.6p 3P_2.0
+  upper: 6s.6d 3D_1.0
+  lower_energy_cm-1: 1.6756148
+  upper_energy_cm-1: 3.8057715
+  wavelength_nm: 582.0425
+  Aki: null
+- lower: 6s.5d 1D_2.0
+  upper: 5d.6p 1P_1.0
+  lower_energy_cm-1: 1.4128433
+  upper_energy_cm-1: 3.5402722
+  wavelength_nm: 582.7889
+  Aki: 45000000.0
+- lower: 6s.5d 3D_1.0
+  upper: 5d.6p 3P_2.0
+  lower_energy_cm-1: 1.120069
+  upper_energy_cm-1: 3.2181982
+  wavelength_nm: 590.9273
+  Aki: 3600000.0
+- lower: 6s.5d 3D_2.0
+  upper: 5d.6p 3P_2.0
+  lower_energy_cm-1: 1.1425765
+  upper_energy_cm-1: 3.2181982
+  wavelength_nm: 597.3352
+  Aki: 16000000.0
+- lower: 6s.6p 3P_2.0
+  upper: 6s.6d 1D_2.0
+  lower_energy_cm-1: 1.6756148
+  upper_energy_cm-1: 3.7488886
+  wavelength_nm: 598.0117
+  Aki: null
+- lower: 6s.5d 3D_1.0
+  upper: 5d.6p 3P_1.0
+  lower_energy_cm-1: 1.120069
+  upper_energy_cm-1: 3.1869035
+  wavelength_nm: 599.8748
+  Aki: 28000000.0
