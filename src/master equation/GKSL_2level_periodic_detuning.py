@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun 11 02:30:16 2026
+Created on Fri Jun 12 11:30:07 2026
 
 @author: USER-01
 """
@@ -38,11 +38,9 @@ transition_12 = library.Transition(state_1, state_2,
 
 transitions = [transition_12]
 
-detuning = 0
-
 # Adding the lasers
 laser_1 = library.Laser(
-    frequency = transition_12.frequency() + detuning,
+    frequency = transition_12.frequency(),
     intensity = 1e5,
     linewidth = 4e6,
 )
@@ -69,11 +67,26 @@ e = basis(4,1)
 c = basis(4,2)
 
 # Hamiltonian in rotating frame
-H = (
-    Omega1/2 * (g*e.dag() + e*g.dag())
-    - Delta1 * e*e.dag()
-    - Delta1 * c*c.dag()
-)
+H0 = (Omega1/2) * (g*e.dag() + e*g.dag())
+
+H_detuning = -(e*e.dag() + c*c.dag())
+
+# Modulating the detuning
+Delta0 = 0
+# A = 20e8 * 2*np.pi      # modulation amplitude (rad/s)
+# omega_m = 2*np.pi*5e6   # modulation frequency
+A = Omega1
+omega_m = Omega1
+
+
+# QuTip takes in H0 + H_detuning * Delta_t in this way
+def Delta_t(t, args):
+    return Delta0 + A * np.cos(omega_m*t)
+
+H = [
+    H0,
+    [H_detuning, Delta_t]
+]
 
 # The jump operators
 c_ops = [
@@ -82,7 +95,7 @@ c_ops = [
 ]
 
 rho0 = g * g.dag()
-tlist = np.linspace(0, 1e-7, num=1000)
+tlist = np.linspace(0, 1e-9, num=1000)
 
 result = mesolve(
     H,

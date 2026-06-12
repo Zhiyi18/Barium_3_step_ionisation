@@ -91,6 +91,7 @@ class Transition:
         return self.frequency() - laser.frequency
     
     def transitionDipoleMoment(self):
+        # Check this formula!
         d_ij = np.sqrt(
             3 * np.pi * epsilon_0 * hbar * c**3 * self.A
             / self.frequency()**3
