@@ -82,12 +82,14 @@ population_vals = barium_solver.solve(N0, t_vals)
 
 #print(population_vals)
 
+total_population = population_vals[:,0] + population_vals[:,1] + population_vals[:,2] + population_vals[:,3]
 fig, ax = plt.subplots(figsize=(8, 5))
 
 ax.plot(t_vals, population_vals[:,0], label = '$N_1$ ground (6s²)')
 ax.plot(t_vals, population_vals[:,1], label = '$N_2$ (6s6p ¹P₁)')
 ax.plot(t_vals, population_vals[:,2], label = '$N_3$ (6s6d ¹D₂)')
 ax.plot(t_vals, population_vals[:,3], label = '$N_4$ ion')
+ax.plot(t_vals, total_population, label = 'Total population')
 
 ax.set_xlabel('Time (s)', fontsize=12)
 ax.set_ylabel('Fractional population', fontsize=12)

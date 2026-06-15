@@ -60,6 +60,8 @@ t_vals = np.linspace(0, 1e-9, num = 1000, endpoint=True)
 N0 = [1, 0, 0]   # Initially all in ground state
 population_vals = barium_solver.solve_2step(N0, t_vals)
 
+total_population = population_vals[:,0] + population_vals[:,1] + population_vals[:,2]
+
 #print(population_vals)
 
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -67,6 +69,7 @@ fig, ax = plt.subplots(figsize=(8, 5))
 ax.plot(t_vals, population_vals[:,0], label = '$N_1$ ground (6s²)')
 ax.plot(t_vals, population_vals[:,1], label = '$N_2$ (6s6p ¹P₁)')
 ax.plot(t_vals, population_vals[:,2], label = '$N_3$ ion')
+ax.plot(t_vals, total_population, label = 'Total population')
 
 ax.set_xlabel('Time (s)', fontsize=12)
 ax.set_ylabel('Fractional population', fontsize=12)

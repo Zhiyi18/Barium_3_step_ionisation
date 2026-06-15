@@ -154,7 +154,7 @@ class RateEquationSolver:
         
         M_2_step = np.array([
                     [-b12v12, b21v12 + A21, 0],
-                    [-A21 + b12v12, -b21v12 - W_ion, 0 ],
+                    [b12v12, -b21v12 - W_ion - A21, 0 ],
                     [0, W_ion, 0]])
         
         

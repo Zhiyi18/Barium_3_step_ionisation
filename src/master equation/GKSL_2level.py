@@ -82,7 +82,7 @@ c_ops = [
 ]
 
 rho0 = g * g.dag()
-tlist = np.linspace(0, 1e-7, num=1000)
+tlist = np.linspace(0, 1e-8, num=1000)
 
 result = mesolve(
     H,
