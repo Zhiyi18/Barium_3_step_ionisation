@@ -74,10 +74,10 @@ ax.plot(t_vals, total_population, label = 'Total population')
 ax.set_xlabel('Time (s)', fontsize=12)
 ax.set_ylabel('Fractional population', fontsize=12)
 # ax.set_title('Transient behavior on $10^{-11}$s timescale', fontsize=13)
-ax.set_title('Ba 3-step ionisation — rate equation model', fontsize=13)
+ax.set_title('Ba 2-step ionisation — rate equation model', fontsize=13)
 # ax.set_title(r'Ionization cross-section =  $6^{-21}$', fontsize=13)
 ax.legend(fontsize=11)
 
 plt.show()
 
-print(population_vals[:,0] + population_vals[:,1] + population_vals[:,2])
+# print(population_vals[:,0] + population_vals[:,1] + population_vals[:,2])

@@ -45,14 +45,16 @@ transition_12 = library.Transition(state_1, state_2,
 
 transitions = [transition_12]
 
-
-steady_state_by_intensity =[]
+steady_state_by_intensity = []
+error_by_intensity = []
 
 for j in range (0, 6, 1):
     
     laser_frequency_vals = []
 
     steady_state_vals = []
+    
+    error_vals = []
 
     for i in range(-200, 200, 5):
         # Adding the lasers
@@ -82,13 +84,13 @@ for j in range (0, 6, 1):
         
         g = basis(4,0)
         e = basis(4,1)
-        continuum = basis(4,2)
+        # continuum = basis(4,2)
         
         # Hamiltonian in rotating frame
         H = (
             Omega1/2 * (g*e.dag() + e*g.dag())
             - Delta1 * e*e.dag()
-            - Delta1 * continuum*continuum.dag()
+            #- Delta1 * continuum*continuum.dag()
         )
         
         # The jump operators
@@ -98,7 +100,7 @@ for j in range (0, 6, 1):
         ]
         
         rho0 = g * g.dag()
-        tlist = np.linspace(0, 1e-7, num=1000)
+        tlist = np.linspace(0, 1e-6, num=1000)
         
         result = mesolve(
             H,
@@ -108,7 +110,7 @@ for j in range (0, 6, 1):
             e_ops = [
                 g*g.dag(),
                 e*e.dag(),
-                continuum*continuum.dag()
+                # continuum*continuum.dag()
             ]
         )
         
@@ -116,10 +118,17 @@ for j in range (0, 6, 1):
         data = result.expect[1]
         steady_state_population = np.mean(data[int(0.9*len(data)):])
         
+        rho22_ss = (Omega1**2 / 4) / (
+                    Delta1**2 +
+                    Omega1**2 / 2 +
+                    transition_12.A**2 / 4
+                    )
+        error_vals.append(rho22_ss-steady_state_population)
         print(f'pho22 = {steady_state_population}')
         steady_state_vals.append(steady_state_population)
     
     steady_state_by_intensity.append(steady_state_vals)
+    error_by_intensity.append(error_vals)
     
 #%%
 lambda0 = transition_12.frequency()
@@ -147,6 +156,34 @@ ax.plot(detuning_MHz, steady_state_by_intensity[3],
 ax.plot(detuning_MHz, steady_state_by_intensity[4],
         label=r'$10^{4}\,\mathrm{W\,m^{-2}}$')
 ax.plot(detuning_MHz, steady_state_by_intensity[5],
+        label=r'$10^{5}\,\mathrm{W\,m^{-2}}$')
+
+ax.grid(alpha=0.3)
+
+ax.legend()
+
+plt.show()
+
+#%%
+fig, ax = plt.subplots(figsize=(8,5))
+
+ax.set_xlabel('553 nm laser detuning (MHz)', fontsize=12)
+
+ax.set_ylabel(r'Difference from the analytical value $\rho_{22}$', fontsize=12)
+
+ax.set_title('Error', fontsize=13)
+
+ax.plot(detuning_MHz, error_by_intensity[0],
+        label=r'$10^{0}\,\mathrm{W\,m^{-2}}$')
+ax.plot(detuning_MHz, error_by_intensity[1],
+        label=r'$10^{1}\,\mathrm{W\,m^{-2}}$')
+ax.plot(detuning_MHz, error_by_intensity[2],
+        label=r'$10^{2}\,\mathrm{W\,m^{-2}}$')
+ax.plot(detuning_MHz, error_by_intensity[3],
+        label=r'$10^{3}\,\mathrm{W\,m^{-2}}$')
+ax.plot(detuning_MHz, error_by_intensity[4],
+        label=r'$10^{4}\,\mathrm{W\,m^{-2}}$')
+ax.plot(detuning_MHz, error_by_intensity[5],
         label=r'$10^{5}\,\mathrm{W\,m^{-2}}$')
 
 ax.grid(alpha=0.3)

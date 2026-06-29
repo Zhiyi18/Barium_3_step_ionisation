@@ -106,7 +106,8 @@ def load_transitions_from_table(table):
 
 # --- main ---
 table = Nist.query(500 * u.nm, 600 * u.nm, linename="Ba I")
-print(table)
+#print(table)
+#print(table[0])
 print(table['Lower level'][:3])
 print(table['Upper level'][:3])
 

@@ -105,6 +105,7 @@ analytical_result = (
 
 error = result.expect[1] - analytical_result
 
+'''
 fig, ax = plt.subplots(figsize = (6,2))
 
 ax.plot(tlist, result.expect[0], lw = 0.5);
@@ -125,3 +126,21 @@ ax.legend([r'$\rho_{11}$ (6s²)',
            r'$\rho_{22}$ (6s6p ¹P₁)', 
            # 'Ion population',
            r'Error($\rho_{22}$)'])
+
+print(error)
+'''
+
+fig, ax1 = plt.subplots(figsize=(6,2))
+
+# populations on left axis
+ax1.plot(tlist, result.expect[0], lw=0.5, label=r'$\rho_{11}$')
+ax1.plot(tlist, result.expect[1], lw=0.5, label=r'$\rho_{22}$')
+ax1.set_ylabel('Population fraction')
+ax1.set_xlabel('Time')
+
+# error on right axis
+ax2 = ax1.twinx()
+ax2.plot(tlist, error, lw=0.5, color='green', label='Error')
+ax2.set_ylabel('Error')
+
+plt.show()

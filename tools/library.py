@@ -10,11 +10,10 @@ import matplotlib.pyplot as plt
 from scipy.constants import h, hbar, epsilon_0, c, k
 from scipy.linalg import expm
 from scipy.special import voigt_profile
-from qutip import *
 
 class State:
     def __init__(self, configuration, S, L, J, energy, 
-                 F=None, parity=None, mJ=None):
+                 parity=None, mJ=None):
         
         self.configuration = configuration
         
@@ -49,64 +48,8 @@ class State:
     def spectroscopic_name(self):
         return f"{self.configuration} {self.term_symbol()}"
     
-    def delta_hyperfine(self, I, F, A, B=0):
-        '''
-        Input F = I + J, A, and B coefficient here to calculate hyperfine splitting
-        '''
+    
         
-        J = self.J
-
-        C = F * (F + 1) - I * (I + 1) - J * (J + 1)
-    
-        # Magnetic dipole term
-        delta_E = 0.5 * A * C
-    
-        # Electric quadrupole term
-        if B != 0 and I > 0.5 and J > 0.5:
-            numerator = (
-                1.5 * C * (C + 1)
-                - 2 * I * (I + 1) * J * (J + 1)
-            )
-    
-            denominator = (
-                I * (2 * I - 1)
-                * J * (2 * J - 1)
-            )
-    
-            delta_E += (B / 4) * numerator / denominator
-    
-        return delta_E
-        
-    def hyperfine_states(self, I, A, B=0):
-        """
-        Split a fine-structure state into hyperfine states.
-        """
-    
-        F_min = abs(I - self.J)
-        F_max = I + self.J
-    
-        states = []
-    
-        F = F_min
-        while F <= F_max:
-    
-            dE = self.delta_hyperfine(I, F, A, B)
-    
-            states.append(
-                State(
-                    configuration = self.configuration,
-                    S = self.S,
-                    L = self.L,
-                    J = self.J,
-                    F=F,
-                    energy = self.energy + dE
-                )
-            )
-    
-            F += 1
-    
-        return states
-            
 class Laser:
     def __init__(self, frequency, intensity, linewidth, polarization = None):
         self.frequency = frequency
@@ -148,11 +91,14 @@ class Transition:
         return self.frequency() - laser.frequency
     
     def transitionDipoleMoment(self):
+        # Check this formula!
         d_ij = np.sqrt(
             3 * np.pi * epsilon_0 * hbar * c**3 * self.A
             / self.frequency()**3
             )
         return d_ij
+    
+        
     
     '''
     # This part is replaced by calculating the Voigt profile directly
@@ -191,7 +137,6 @@ class RateEquationSolver:
     
     def build_2_step_matrix(self):
         transition12 = self.transitions[0]
-        transition23 = self.transitions[1]
     
         laser1 = self.lasers[0]
         laser2 = self.lasers[1]
@@ -207,9 +152,10 @@ class RateEquationSolver:
         sigma_ion = 6e-21
         W_ion = sigma_ion * laser2.intensity / (h * laser2.frequency)
         
-        M_2_step = ([b12v12, b21v12 + A21, 0],
-                    [-A21 - b12v12, -b12v12 - W_ion, 0 ],
-                    [0, W_ion, 0])
+        M_2_step = np.array([
+                    [-b12v12, b21v12 + A21, 0],
+                    [b12v12, -b21v12 - W_ion - A21, 0 ],
+                    [0, W_ion, 0]])
         
         
         return M_2_step
@@ -303,7 +249,29 @@ class RateEquationSolver:
     
     def solve_2step(self, N0, t):
         M = self.build_2_step_matrix()
+        print(M)
         return np.array([expm(M * ti) @ N0 for ti in t])
+
+"""
+# Gonna use QuTip for this!
+class densityMatrixSolver:
+    def __init__(self, states, transitions, lasers, mass):
+        self.states = states
+        self.transitions = transitions
+        self.lasers = lasers
+        self.mass = mass
+        
+    def buildHamiltonian(self):
+        
+    
+    
+    def buildDissipation(self, densityMatrix):
+        
+        
+        
+    def solve(self, densityMatrix, t):
+        
+"""
     
     
             
